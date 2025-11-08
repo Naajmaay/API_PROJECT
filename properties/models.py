@@ -1,7 +1,5 @@
 from django.db import models
 
-from django.contrib.auth.models import User
-
 class Property(models.Model):
     PROPERTY_TYPES = [
         ('SALE', 'For Sale'),
@@ -17,7 +15,7 @@ class Property(models.Model):
     bathrooms = models.PositiveIntegerField(default=1)
     area_sqft = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
     image = models.ImageField(upload_to='property_images/', null=True, blank=True)
-    agent = models.ForeignKey(User, on_delete=models.CASCADE, related_name='properties')
+    agent_name = models.CharField(max_length=100, blank=True, null=True)  # simple agent name
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

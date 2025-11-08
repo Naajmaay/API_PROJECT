@@ -1,6 +1,15 @@
+from rest_framework import viewsets
+from django.shortcuts import redirect
+from .models import Property
+from .serializers import PropertySerializer
 
-from django.http import HttpResponse
+class PropertyViewSet(viewsets.ModelViewSet):
+    queryset = Property.objects.all()
+    serializer_class = PropertySerializer
 
-def property_list(request):
-    return HttpResponse("available properties")
-
+    def create(self, request,  ):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        
+        return redirect('/')  
